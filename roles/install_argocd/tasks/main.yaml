@@ -1,0 +1,7 @@
+---
+
+- name: render and apply all templates for argocd
+  loop: "{{ argo_manifests }}"
+  loop_control:
+    label: "{{ item.name }}"
+  include_tasks: "_apply_manifest_chunk.yaml"

@@ -1,0 +1,106 @@
+--- 
+apiVersion: pipelines.openshift.io/v1alpha1
+kind: GitopsService
+metadata:
+  name: cluster
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: reposerver-sa
+  namespace: openshift-gitops
+---
+apiVersion: argoproj.io/v1beta1
+kind: ArgoCD
+metadata:
+  namespace: openshift-gitops
+  name: openshift-gitops
+spec:
+  controller:
+    resources:
+      limits:
+        memory: 4Gi
+  kustomize.buildOptions: --enable-helm --load-restrictor=LoadRestrictionsNone
+  server:
+    route:
+      enabled: true
+      tls:
+        insecureEdgeTerminationPolicy: Redirect
+        termination: reencrypt
+  applicationInstanceLabelKey: "argocd.argoproj.io/instance"
+  applicationSet:
+    enabled: true
+  repo:
+    serviceaccount: reposerver-sa
+  rbac:
+    scopes: '[groups]'
+    defaultPolicy: ""
+    policy: |
+      # set needed groups as admin role
+      g, system:cluster-admins, role:admin
+      g, cluster-admins, role:admin
+
+      # allow admin role full access to default project
+      p, role.admin, applications, get, default, allow
+      p, role.admin, applications, create, default, allow
+      p, role.admin, applications, update, default, allow
+      p, role.admin, applications, delete, default, allow
+      p, role.admin, projects, get, default, allow
+
+      # deny all other roles access to default project
+      p, role.deny-default, applications, get, default, deny
+      p, role.deny-default, applications, create, default, deny
+      p, role.deny-default, applications, update, default, deny
+      p, role.deny-default, applications, delete, default, deny
+      p, role.deny-default, projects, get, default, deny
+
+      # set all other groups to deny role
+      g, *, role:deny-default
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: openshift-gitops
+  name: argocd-ssh-known-hosts
+data:
+  ssh_known_hosts: |
+    [github.com] {{ repo_pub_key }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: openshift-gitops
+  name: repo-connect
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: git
+  name: repo-connect
+  url: "{{ repo_src_url }}"
+data:
+  sshPrivateKey: "{{ repo_priv_key | b64encode }}"
+---
+apiVersion: argoproj.io/v1aplha1
+kind: AppProject
+metadata:
+  namespace: openshift-gitops
+  name: default
+spec:
+  sourceRepos:
+  - '{{ repo_src_url }}'
+  sourceNamespaces: ['openshift-gitops']
+  destinations:
+  - server: '*'
+    namespace: '*'
+  clusterResourceBlacklist:
+  - group: ''
+    kind: ''
+  clusterResourceWhitelist:
+  - group: ''
+    kind: ''
+  namespaceResourceBlacklist:
+  - group: ''
+    kind: ''
+  namespaceResourceWhitelist:
+  - group: ''
+    kind: ''

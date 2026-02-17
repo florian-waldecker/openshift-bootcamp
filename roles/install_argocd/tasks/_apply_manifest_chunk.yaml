@@ -1,0 +1,11 @@
+---
+
+- name: render and apply manifest chunk for '{{ item.name }}'
+  shell: echo "{{ lookup('template', item.file) }}" | oc apply -f
+
+- name: execute post apply wait condition for 'item.name'
+  command: "{{ item.post_wait.cmd | default ('echo') }}"
+  register: _resp
+  delay: 3
+  retries: 10
+  until: "{{ item.post_wait.cond | default (true) }}"
