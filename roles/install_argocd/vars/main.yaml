@@ -10,7 +10,7 @@ argo_manifests:
 - name: "argocd instance"
   file: "argocd-config.yaml.j2"
 
-repo_src_url: "ssh://git@github.com:florian-waldecker/openshift-bootcamp.git"
+repo_src_url: "git@github.com:florian-waldecker/openshift-bootcamp.git"
 repo_pub_key: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   66633733333438353363613931653233343164633935656563646136383764333234316236616431
