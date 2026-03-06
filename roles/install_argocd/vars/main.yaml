@@ -6,7 +6,7 @@ argo_manifests:
       oc get crd
       gitopsservices.pipelines.openshift.io
       argocd.argoproj.io
-    cond: "_resp.stdout == 0"
+    cond: "_resp.rc == 0"
 - name: "argocd instance"
   file: "argocd-config.yaml.j2"
 
