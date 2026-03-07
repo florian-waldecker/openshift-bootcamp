@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: openshift-gitops
+  name: argocd-ssh-known-hosts
+data:
+  ssh_known_hosts: |
+    [github.com] {{ repo_pub_key }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: openshift-gitops
+  name: repo-connect
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: git
+  name: repo-connect
+  url: "{{ repo_src_url }}"
+data:
+  sshPrivateKey: "{{ repo_priv_key | b64encode }}"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  namespace: openshift-gitops
+  name: default
+spec:
+  sourceRepos:
+  - '{{ repo_src_url }}'
+  sourceNamespaces: ['openshift-gitops']
+  destinations:
+  - server: '*'
+    namespace: '*'
+  clusterResourceBlacklist:
+  - group: ''
+    kind: ''
+  clusterResourceWhitelist:
+  - group: ''
+    kind: ''
+  namespaceResourceBlacklist:
+  - group: ''
+    kind: ''
+  namespaceResourceWhitelist:
+  - group: ''
+    kind: ''

@@ -1,4 +1,6 @@
 argo_manifests:
+- name: "argocd namespaces"
+  file: "argocd-namespaces.yaml.j2"
 - name: "argocd operator"
   file: "argocd-operator.yaml.j2"
   post_wait:
@@ -7,8 +9,12 @@ argo_manifests:
       gitopsservices.pipelines.openshift.io
       argocds.argoproj.io
     cond: "_resp.rc == 0"
-- name: "argocd instance"
-  file: "argocd-config.yaml.j2"
+- name: "argocd serviceaccount"
+  file: "argocd-serviceaccount.yaml.j2"
+- name: "argocd rolebindings"
+  file: "argocd-rolebindings.yaml.j2"
+- name: "argocd repo connection"
+  file: "argocd-repo-connect.yaml.j2"
 
 repo_src_url: "git@github.com:florian-waldecker/openshift-bootcamp.git"
 repo_pub_key: !vault |
