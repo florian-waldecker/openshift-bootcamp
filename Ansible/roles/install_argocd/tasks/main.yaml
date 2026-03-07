@@ -1,5 +1,9 @@
 ---
 
+- name: login via oc cli tool
+  shell:
+    cmd: oc login {{ oc_url }} -u {{ oc_user }} -p {{ oc_pass }} 
+
 - name: render and apply all templates for argocd
   loop: "{{ argo_manifests }}"
   loop_control:
