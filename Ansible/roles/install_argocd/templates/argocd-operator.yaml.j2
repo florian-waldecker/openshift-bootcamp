@@ -15,7 +15,7 @@ metadata:
 spec: 
   name: openshift-gitops-operator
   sourceNamespace: openshift-marketplace
-  source: redhat-operators
+  source: "{{ catalog_source }}"
   channel: latest
   installPlanApproval: Automatic
   config:
