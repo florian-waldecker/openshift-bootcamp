@@ -2,18 +2,18 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: cluster-logging
-  namespace: openshift-logging
+  namespace: openshift-logging-do380
 spec:
-  channel: stable-6.1
+  channel: stable-6.2
   installPlanApproval: Automatic
   name: cluster-logging
-  source: "redhat-operators"
+  source: gls-catalog-cs
   sourceNamespace: openshift-marketplace
 ---
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: openshift-logging
-  namespace: openshift-logging
+  namespace: openshift-logging-do380
 spec:
   upgradeStrategy: Default

@@ -4,10 +4,10 @@ metadata:
   name: cluster-logging
   namespace: openshift-logging
 spec:
-  channel: stable-6.2
+  channel: stable-6.1
   installPlanApproval: Automatic
   name: cluster-logging
-  source: "{{ catalog_source }}"
+  source: redhat-operators
   sourceNamespace: openshift-marketplace
 ---
 apiVersion: operators.coreos.com/v1
