@@ -9,7 +9,10 @@ spec:
   generators:
     - list:
         elements:
-          - name: cluster-1
+          - name: cluster-local
+            server: https://kubernetes.default.svc
+            branch: main
+          - name: cluster-do380
             server: https://kubernetes.default.svc
             branch: main
   syncPolicy: {}
