@@ -12,8 +12,7 @@ spec:
           - name: cluster-1
             server: https://kubernetes.default.svc
             branch: main
-  syncPolicy:
-    preserveResourceOnDeletion: true
+  syncPolicy: {}
   template:
     metadata:
       name: "{{ .name }}-logging-app"
