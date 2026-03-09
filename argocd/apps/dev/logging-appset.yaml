@@ -21,7 +21,7 @@ spec:
       source:
         repoURL: git@github.com:florian-waldecker/openshift-bootcamp.git
         targetRevision: "{{ .branch }}"
-        path: argocd/manifests/overlays/{{ .name }}
+        path: argocd/manifests/logging/overlays/{{ .name }}
       destination:
         server: "{{ .server }}"
       syncPolicy:
