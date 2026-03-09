@@ -14,4 +14,4 @@ patches:
     patch: |-
       - op: replace
         path: /spec/source
-        value: ""
+        value: "gls-catalog-cs"
