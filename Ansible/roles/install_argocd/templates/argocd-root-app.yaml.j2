@@ -1,0 +1,19 @@
+--- 
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  namespace: openshift-gitops
+  name: root-app
+spec:
+  project: default
+  source:
+    repoURL: {{ repo_src_url }}
+    targetRevision: main
+    path: "argocd/apps/dev"
+  destination:
+    server: "https://kubernetes.default.svc"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
