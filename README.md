@@ -14,7 +14,7 @@ Ansible and GitOps automation with ArgoCD.
 
 ```
 openshift-bootcamp/
-├── ansible/                 # Playbooks, roles, and inventories for deploying OpenShift and ArgoCD
+├── ansible/                 # Playbooks, roles, and inventories for deploying ArgoCD
 │   ├── inventory            # Ansible inventory file listing target hosts/clusters
 │   ├── main.yaml            # Entry-point playbook that orchestrates setup
 │   ├── roles/               # Reusable roles; e.g. install_argocd contains templates
