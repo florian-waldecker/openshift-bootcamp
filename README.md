@@ -14,23 +14,23 @@ Ansible and GitOps automation with ArgoCD.
 
 ```
 openshift-bootcamp/
-├── ansible/             # Playbooks, roles, and inventories for deploying OpenShift and ArgoCD
-│   ├── inventory        # Ansible inventory file listing target hosts/clusters
-│   ├── main.yaml        # Entry-point playbook that orchestrates setup
-│   ├── roles/           # Reusable roles; e.g. install_argocd contains templates
+├── ansible/                 # Playbooks, roles, and inventories for deploying OpenShift and ArgoCD
+│   ├── inventory            # Ansible inventory file listing target hosts/clusters
+│   ├── main.yaml            # Entry-point playbook that orchestrates setup
+│   ├── roles/               # Reusable roles; e.g. install_argocd contains templates
 │   │   └── install_argocd/
 │   │       ├── tasks/       # Tasks executed by the role
 │   │       ├── templates/   # Jinja2 manifests used by the role
 │   │       └── vars/        # Variables used during role execution
-│   └── vars/             # Global variable definitions (edit before running)
-├── argocd/               # GitOps applications and kustomize overlays
-│   ├── apps/             # ApplicationSet YAMLs grouped by environment (dev, int, live)
-│   └── manifests/        # Kustomize bases and overlays for shared resources
-│       ├── logging/      # Example of logging stack configuration
-│       │   ├── do380/    # Working configuration of logging operator in do380 environments
-│       │   ├── local/    # Working configuration of logging operator in local crc environments
-│       │   └── overlays/ # Cluster-specific customizations
-└── README.md             # This file
+│   └── vars/                # Global variable definitions (edit before running)
+├── argocd/                  # GitOps applications and kustomize overlays
+│   ├── apps/                # ApplicationSet YAMLs grouped by environment (dev, int, live)
+│   └── manifests/           # Kustomize bases and overlays for shared resources
+│       ├── logging/         # Example of logging stack configuration
+│       │   ├── do380/       # Working configuration of logging operator in do380 environments
+│       │   ├── local/       # Working configuration of logging operator in local crc environments
+│       │   └── overlays/    # Cluster-specific customizations
+└── README.md                # This file
 ```
 > ⚠️ **Note:** the `argocd/manifests/logging/*` directories contain
 > example configurations that may be outdated; treat them as
