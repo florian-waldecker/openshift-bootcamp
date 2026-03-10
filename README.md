@@ -29,8 +29,8 @@ openshift-bootcamp/
 │       ├── logging/      # Example of logging stack configuration
 │       │   ├── do380/    # Working configuration of logging operator in do380 environments
 │       │   ├── local/    # Working configuration of logging operator in local crc environments
-│       │   └── overlays/  # Cluster-specific customizations
-└── README.md            # This file
+│       │   └── overlays/ # Cluster-specific customizations
+└── README.md             # This file
 ```
 > ⚠️ **Note:** the `argocd/manifests/logging/*` directories contain
 > example configurations that may be outdated; treat them as
